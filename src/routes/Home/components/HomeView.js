@@ -5,7 +5,7 @@ import FloatingActionButton from 'material-ui/FloatingActionButton'
 import ContentAdd from 'material-ui/svg-icons/content/add'
 import classes from './HomeView.scss'
 
-export const HomeView = () => (
+export const HomeView = ({ switchToEntityAddPage }) => (
   <div>
     <img
       alt='Connectify'
@@ -21,10 +21,17 @@ export const HomeView = () => (
       'position': 'fixed',
       'bottom': '1rem',
       'right': '1rem'
-    }} mini={!!1}>
+    }}
+      mini={!!1}
+      onClick={switchToEntityAddPage}
+    >
       <ContentAdd />
     </FloatingActionButton>
   </div>
 )
+
+HomeView.propTypes = {
+  switchToEntityAddPage: React.PropTypes.func.isRequired
+}
 
 export default HomeView

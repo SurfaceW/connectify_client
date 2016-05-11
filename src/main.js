@@ -24,9 +24,13 @@ const browserHistory = useRouterHistory(createBrowserHistory)({
   basename: __BASENAME__
 })
 
+// expose browserHistory interface to app
+window.connectify_browserHistory = browserHistory
+
 // ========================================================
 // Store and History Instantiation
 // ========================================================
+
 // Create redux store and sync with react-router-redux. We have installed the
 // react-router-redux reducer under the routerKey "router" in src/routes/index.js,
 // so we need to provide a custom `selectLocationState` to inform
