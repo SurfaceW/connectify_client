@@ -12,7 +12,7 @@ export default (initialState = {}, history) => {
     level: 'log',
     collapsed: true
   })
-  const middleware = [logger, thunk, routerMiddleware(history)]
+  const middleware = [thunk, logger, routerMiddleware(history)]
 
   // ======================================================
   // Store Enhancers

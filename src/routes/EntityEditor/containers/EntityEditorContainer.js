@@ -11,12 +11,25 @@ import EntityEditor from '../components/EntityEditor'
     Keys will be passed as props to presentational components. Here we are
     implementing our wrapper around increment; the component doesn't care   */
 
-const mapActionCreators = {
+import {
+  createEntityRequest,
+  saveEntity,
+  updateEntityForm,
+  createNewProp,
+  deleteProp,
+  updateEntityProp } from '../modules/entity'
 
+const mapActionCreators = {
+  createEntityRequest,
+  saveEntity,
+  updateEntityProp,
+  updateEntityForm,
+  createNewProp,
+  deleteProp
 }
 
 const mapStateToProps = (state) => ({
-  entity: state.entity
+  entityEditor: state.entityEditor
 })
 
 export default connect(mapStateToProps, mapActionCreators)(EntityEditor)

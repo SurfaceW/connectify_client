@@ -22,10 +22,9 @@ const searchResultItem = {
 
 export const stateMap = {
   searchText: 'JavaScript',
-
   searchResults: [
     searchResultItem
   ],
-
-  entity: entityItem
+  entity: entityItem,
+  entityEditor: entityItem
 }

@@ -22,7 +22,7 @@ export const HomeView = ({ switchToEntityAddPage }) => (
       'bottom': '1rem',
       'right': '1rem'
     }}
-      mini={!!1}
+      mini
       onClick={switchToEntityAddPage}
     >
       <ContentAdd />

@@ -1,10 +1,4 @@
 /**
- * api.js
- *
- * offers basic api
- */
-
-/**
  * fetch api
  * @see https://www.npmjs.com/package/node-fetch
  *
@@ -25,14 +19,13 @@ import fetch from 'node-fetch'
 // ------------------------------------
 // Constants
 // ------------------------------------
-const BASE_URL = __DEV__ ? 'localhost:8079' : 'www.connectify.com'
-const API = {
-
+const BASE_URL = __DEV__ ? 'http://localhost:8079' : 'http://www.connectify.com'
+export const API = {
   searchEntity: query => fetch(BASE_URL + '/search/' + query, {
     method: 'GET'
   }),
 
-  createEntity: (query, data) => fetch(BASE_URL + '/search/' + query, {
+  createEntity: data => fetch(BASE_URL + '/entity/', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(data)
@@ -53,4 +46,3 @@ const API = {
   })
 }
 
-export default API
