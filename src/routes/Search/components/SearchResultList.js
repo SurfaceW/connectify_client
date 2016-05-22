@@ -7,6 +7,7 @@ export default (searchResults, gotoEntity) => (
     {_.map(searchResults, (result) => {
       return (
         <Card
+          key={result['_id']}
           onClick={gotoEntity.bind(this, result['_id'], searchResults)}
         >
           <CardHeader

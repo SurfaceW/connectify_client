@@ -8,6 +8,7 @@ import DeviceWidgets from 'material-ui/svg-icons/device/widgets'
 import FloatingActionButton from 'material-ui/FloatingActionButton'
 import Add from 'material-ui/svg-icons/content/add'
 import Done from 'material-ui/svg-icons/action/done'
+import Delete from 'material-ui/svg-icons/action/delete'
 import { PropPairList } from './PropPairList'
 import AppBar from '../../../components/AppBar'
 
@@ -20,21 +21,25 @@ const floatActionButtonStyle = {
 export const EntityEditor = ({
   saveEntity,
   createEntityRequest,
+  updateEntityRequest,
+  deleteEntityRequest,
   updateEntityForm,
   updateEntityProp,
   createNewProp,
   deleteProp,
   entityEditor }) => (
   <div>
-    {AppBar('Create Entity')}
+    {AppBar(entityEditor['_id'] ? 'Update Entity' : 'Create Entity')}
     <Paper zDepth={1}>
       <TextField
         hintText='Entity Name'
+        defaultValue={entityEditor['name'] || ''}
         onBlur={updateEntityForm.bind(null, { type: 'name' })}
       />
       <TextField
         hintText='Support multiLine edit'
         floatingLabelText='Definition of this entity'
+        defaultValue={entityEditor['define'] || ''}
         multiLine
         rows={5}
         onBlur={updateEntityForm.bind(null, { type: 'define' })}
@@ -52,10 +57,19 @@ export const EntityEditor = ({
         />
       </div>
     </Paper>
+    <FlatButton
+      label='DELETE ENTITY'
+      primary
+      icon={<Delete />}
+      onClick={deleteEntityRequest.bind(null, entityEditor['_id'])}
+    />
     <FloatingActionButton
       style={floatActionButtonStyle}
       mini
-      onClick={createEntityRequest.bind(null, entityEditor)}
+      onClick={entityEditor['_id']
+        ? updateEntityRequest.bind(null, entityEditor)
+        : createEntityRequest.bind(null, entityEditor)
+      }
     >
       <Done />
     </FloatingActionButton>
@@ -69,7 +83,9 @@ EntityEditor.propTypes = {
   updateEntityProp: React.PropTypes.func.isRequired,
   createNewProp: React.PropTypes.func.isRequired,
   deleteProp: React.PropTypes.func.isRequired,
-  createEntityRequest: React.PropTypes.func.isRequired
+  createEntityRequest: React.PropTypes.func.isRequired,
+  updateEntityRequest: React.PropTypes.func.isRequired,
+  deleteEntityRequest: React.PropTypes.func.isRequired
 }
 
 export default EntityEditor

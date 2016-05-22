@@ -12,7 +12,9 @@ import EntityEditor from '../components/EntityEditor'
     implementing our wrapper around increment; the component doesn't care   */
 
 import {
+  updateEntityRequest,
   createEntityRequest,
+  deleteEntityRequest,
   saveEntity,
   updateEntityForm,
   createNewProp,
@@ -20,7 +22,9 @@ import {
   updateEntityProp } from '../modules/entity'
 
 const mapActionCreators = {
+  updateEntityRequest,
   createEntityRequest,
+  deleteEntityRequest,
   saveEntity,
   updateEntityProp,
   updateEntityForm,

@@ -8,7 +8,7 @@ const PropsCard = (props) => (
     <CardText>
       {_.map(props, (prop) => {
         return (
-          <div>
+          <div key={_.uniqueId('prop_')}>
             <h4>{prop.name}</h4>
             <p>{prop.value}</p>
           </div>
