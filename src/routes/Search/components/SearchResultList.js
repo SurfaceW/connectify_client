@@ -2,12 +2,12 @@ import React from 'react'
 import _ from 'lodash'
 import { Card, CardHeader, CardText } from 'material-ui/Card'
 
-export default (searchResults) => (
+export default (searchResults, gotoEntity) => (
   <div>
     {_.map(searchResults, (result) => {
       return (
         <Card
-          onClick={() => { console.log('click me!') }}
+          onClick={gotoEntity.bind(this, result['_id'], searchResults)}
         >
           <CardHeader
             title={result.name}

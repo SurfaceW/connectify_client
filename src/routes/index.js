@@ -3,6 +3,7 @@ import HomeRoute from './Home'
 import CounterRoute from './Counter'
 import EntityEditorRoute from './EntityEditor'
 import SearchRoute from './Search'
+import EntityPageRoute from './EntityPage'
 
 /*  Note: Instead of using JSX, we recommend using react-router
     PlainRoute objects to build route definitions.   */
@@ -14,7 +15,8 @@ export const createRoutes = (store) => ({
   childRoutes: [
     CounterRoute(store),       // route: /counter
     EntityEditorRoute(store),  // route: /entity/add
-    SearchRoute(store)         // route: /search/:query
+    SearchRoute(store),        // route: /search/:query
+    EntityPageRoute(store)     // route: /entity/:entityId
   ]
 })
 
