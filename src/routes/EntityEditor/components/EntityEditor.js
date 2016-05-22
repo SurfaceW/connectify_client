@@ -1,5 +1,4 @@
 import React from 'react'
-import AppBar from 'material-ui/AppBar'
 import Divider from 'material-ui/Divider'
 import Subheader from 'material-ui/Subheader'
 import FlatButton from 'material-ui/FlatButton'
@@ -10,6 +9,7 @@ import FloatingActionButton from 'material-ui/FloatingActionButton'
 import Add from 'material-ui/svg-icons/content/add'
 import Done from 'material-ui/svg-icons/action/done'
 import { PropPairList } from './PropPairList'
+import AppBar from '../../../components/AppBar'
 
 const floatActionButtonStyle = {
   'position': 'fixed',
@@ -26,11 +26,7 @@ export const EntityEditor = ({
   deleteProp,
   entityEditor }) => (
   <div>
-    <AppBar
-      zDepth={2}
-      title='Create Entity'
-      iconClassNameRight='muidocs-icon-navigation-expand-more'
-    />
+    {AppBar('Create Entity')}
     <Paper zDepth={1}>
       <TextField
         hintText='Entity Name'
