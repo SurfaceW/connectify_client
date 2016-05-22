@@ -1,11 +1,12 @@
 import React from 'react'
+import _ from 'lodash'
 import CenterIcon from '../assets/connectify_icon.png'
 import TextField from 'material-ui/TextField'
 import FloatingActionButton from 'material-ui/FloatingActionButton'
 import ContentAdd from 'material-ui/svg-icons/content/add'
 import classes from './HomeView.scss'
 
-export const HomeView = ({ switchToEntityAddPage }) => (
+export const HomeView = ({ switchToEntityAddPage, searchEntity }) => (
   <div>
     <img
       alt='Connectify'
@@ -13,7 +14,8 @@ export const HomeView = ({ switchToEntityAddPage }) => (
       src={CenterIcon} />
     <div className={classes.searchContainer}>
       <TextField
-        hintText='Enter a name to search'
+        hintText='Enter a name to search and hit enter'
+        onKeyDown={handleKeyDown.bind(this, searchEntity)}
         style={{width: '400px'}}
       />
     </div>
@@ -30,7 +32,17 @@ export const HomeView = ({ switchToEntityAddPage }) => (
   </div>
 )
 
+const handleKeyDown = (searchEntity, event) => {
+  // when user hit enter
+  if (event.keyCode === 13 || event.which === 13) {
+    let query = event.target.value
+    if (_.isNil(query)) return
+    searchEntity(query)
+  }
+}
+
 HomeView.propTypes = {
+  searchEntity: React.PropTypes.func.isRequired,
   switchToEntityAddPage: React.PropTypes.func.isRequired
 }
 

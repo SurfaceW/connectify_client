@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import { switchToEntityAddPage } from '../modules/entity'
+import { switchToEntityAddPage, searchEntity } from '../modules/entity'
 
 /*  This is a container component. Notice it does not contain any JSX,
     nor does it import React. This component is **only** responsible for
@@ -13,7 +13,8 @@ import HomeView from '../components/HomeView'
     implementing our wrapper around increment; the component doesn't care   */
 
 const mapActionCreators = {
-  switchToEntityAddPage
+  switchToEntityAddPage,
+  searchEntity
 }
 
 const mapStateToProps = (state) => ({
