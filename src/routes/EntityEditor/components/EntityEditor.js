@@ -10,6 +10,7 @@ import Add from 'material-ui/svg-icons/content/add'
 import Done from 'material-ui/svg-icons/action/done'
 import Delete from 'material-ui/svg-icons/action/delete'
 import { PropPairList } from './PropPairList'
+import { RelationPairList } from './RelationPairList'
 import AppBar from '../../../components/AppBar'
 
 const floatActionButtonStyle = {
@@ -23,10 +24,19 @@ export const EntityEditor = ({
   createEntityRequest,
   updateEntityRequest,
   deleteEntityRequest,
+
   updateEntityForm,
   updateEntityProp,
   createNewProp,
   deleteProp,
+
+  changeRelationName,
+  deleteEntityTag,
+  updateSearchEntityInput,
+  selectEntityTag,
+  deleteEntityRelation,
+  createNewRelation,
+
   entityEditor }) => (
   <div>
     {AppBar(entityEditor['_id'] ? 'Update Entity' : 'Create Entity')}
@@ -54,6 +64,24 @@ export const EntityEditor = ({
           label='add new prop'
           icon={<Add />}
           onClick={createNewProp}
+        />
+      </div>
+    </Paper>
+    <Paper zDepth={1} style={{ marginTop: '10px' }}>
+      <Subheader><DeviceWidgets color={'#4BB9D1'} /> Relations Define</Subheader>
+      <Divider />
+      {RelationPairList(entityEditor.relations, {
+        onChangeRelationName: changeRelationName,
+        onDeleteEntityTag: deleteEntityTag,
+        onUpdateSearchEntityInput: updateSearchEntityInput,
+        onSelectEntityTag: selectEntityTag,
+        onDeleteRelation: deleteEntityRelation
+      }, entityEditor.entitySugs)}
+      <div>
+        <FlatButton
+          label='add new relation'
+          icon={<Add />}
+          onClick={createNewRelation}
         />
       </div>
     </Paper>
@@ -85,7 +113,14 @@ EntityEditor.propTypes = {
   deleteProp: React.PropTypes.func.isRequired,
   createEntityRequest: React.PropTypes.func.isRequired,
   updateEntityRequest: React.PropTypes.func.isRequired,
-  deleteEntityRequest: React.PropTypes.func.isRequired
+  deleteEntityRequest: React.PropTypes.func.isRequired,
+
+  createNewRelation: React.PropTypes.func.isRequired,
+  changeRelationName: React.PropTypes.func.isRequired,
+  deleteEntityTag: React.PropTypes.func.isRequired,
+  updateSearchEntityInput: React.PropTypes.func.isRequired,
+  selectEntityTag: React.PropTypes.func.isRequired,
+  deleteEntityRelation: React.PropTypes.func.isRequired
 }
 
 export default EntityEditor

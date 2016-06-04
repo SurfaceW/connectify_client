@@ -19,7 +19,14 @@ import {
   updateEntityForm,
   createNewProp,
   deleteProp,
-  updateEntityProp } from '../modules/entity'
+  updateEntityProp,
+
+  createNewRelation,
+  changeRelationName,
+  deleteEntityTag,
+  updateSearchEntityInput,
+  selectEntityTag,
+  deleteEntityRelation } from '../modules/entity'
 
 const mapActionCreators = {
   updateEntityRequest,
@@ -29,7 +36,14 @@ const mapActionCreators = {
   updateEntityProp,
   updateEntityForm,
   createNewProp,
-  deleteProp
+  deleteProp,
+
+  createNewRelation,
+  changeRelationName,
+  deleteEntityTag,
+  updateSearchEntityInput,
+  selectEntityTag,
+  deleteEntityRelation
 }
 
 const mapStateToProps = (state) => ({
