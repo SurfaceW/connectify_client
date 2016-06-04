@@ -24,7 +24,7 @@ export function searchEntity (query) {
     }).then((response) => {
       dispatch({
         type: SEARCH_ENTITY,
-        searchResults: response.data
+        searchResults: preprocessResponse(response.data)
       })
       window.connectify_browserHistory.push('search/' + encodeURIComponent(query))
     })
@@ -33,6 +33,13 @@ export function searchEntity (query) {
 
 export const actions = {
   switchToEntityAddPage
+}
+
+const preprocessResponse = (data) => {
+  return _.map(data, entity => {
+    _.forEach(entity.relations, r => { r.id = _.uniqueId('relationId_') })
+    return entity
+  })
 }
 
 // ------------------------------------
