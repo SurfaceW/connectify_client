@@ -41,6 +41,9 @@ const history = syncHistoryWithStore(browserHistory, store, {
   selectLocationState: (state) => state.router
 })
 
+// special call to dispatch use manmually in the containers
+export const dispatch = store.dispatch
+
 // ========================================================
 // Developer Tools Setup
 // ========================================================
