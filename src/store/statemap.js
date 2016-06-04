@@ -15,6 +15,7 @@ const entityItem = {
     value: 'E.B.'
   }],
   relations: [{
+    id: 'uniqueId',
     name: 'belong to',
     relatedEntities: [ 'entityId' ]
   }],

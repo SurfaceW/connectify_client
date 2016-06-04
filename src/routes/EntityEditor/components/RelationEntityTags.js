@@ -1,11 +1,12 @@
 import React from 'react'
+import _ from 'lodash'
 
-const RelationEntityTags = (tags, onDeleteTag) => (
-  <div className='tag-container'>
+const RelationEntityTags = (tags, onDeleteTag, id) => (
+  <div className='tag-container' key={_.uniqueId('entity_tag_')}>
     {tags.map(tag => (
       <div className='tag-item'>
         <span>{tag.name}</span>
-        <span onClick={onDeleteTag.bind(null, tag.name)}>╳</span>
+        <span onClick={onDeleteTag.bind(null, tag.name, id)}>╳</span>
       </div>
     ))}
   </div>

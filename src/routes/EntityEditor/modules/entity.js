@@ -57,14 +57,6 @@ export function deleteEntityRequest (id) {
   }
 }
 
-export function saveEntity () {
-  return function (dispatch) {
-    return new Promise((resolve, reject) => {
-
-    })
-  }
-}
-
 export function updateEntityForm (data, event) {
   return {
     type: UPDATE_ENTITY_FORM,
@@ -101,17 +93,19 @@ export function createNewRelation () {
   }
 }
 
-export function changeRelationName (name) {
+export function changeRelationName ({ id }, event) {
   return {
     type: UPDATE_RELATION_NAME,
-    name: name
+    name: event.target.value,
+    relationId: id
   }
 }
 
-export function deleteEntityTag (name) {
+export function deleteEntityTag (name, id) {
   return {
     type: DELETE_ENTITY_RELATION_TAG,
-    name: name
+    name: name,
+    relationId: id
   }
 }
 
@@ -121,6 +115,7 @@ export function updateSearchEntityInput (searchText) {
   return (dispatch) => {
     clearTimeout(requestDelayTimer)
     requestDelayTimer = setTimeout(() => {
+      if (_.isNil(searchText)) return
       API.searchEntity(searchText).then((response) => {
         return response.json()
       }).then((data) => {
@@ -133,20 +128,23 @@ export function updateSearchEntityInput (searchText) {
   }
 }
 
-export function selectEntityTag (chosenRequest, index) {
+export function selectEntityTag (item, entitySugs, chosenRequest, index) {
   return {
-    type: SELECT_ENTITY_RELATION_TAG
+    type: SELECT_ENTITY_RELATION_TAG,
+    name: chosenRequest,
+    relation: item,
+    entitySugs: entitySugs
   }
 }
 
-export function deleteEntityRelation (name) {
+export function deleteEntityRelation (id) {
   return {
-    type: DELETE_ENTITY_RELATION
+    type: DELETE_ENTITY_RELATION,
+    relationId: id
   }
 }
 
 export const actions = {
-  saveEntity,
   updateEntityForm,
   updateEntityProp,
   createNewProp,
@@ -191,6 +189,25 @@ const ACTION_HANDLERS = {
   },
   [UPDATE_SEARCH_ENTITY_INPUT]: (state, action) => {
     state.entitySugs = action.data.map(entity => _.pick(entity, ['_id', 'name']))
+    return _.cloneDeep(state)
+  },
+  [SELECT_ENTITY_RELATION_TAG]: (state, action) => {
+    let relation = _.find(state.relations, { 'id': action.relation.id })
+    relation.relatedEntities.push(_.find(action.entitySugs, { 'name': action.name }))
+    return _.cloneDeep(state)
+  },
+  [DELETE_ENTITY_RELATION_TAG]: (state, action) => {
+    let relation = _.find(state.relations, { 'id': action.relationId })
+    _.remove(relation.relatedEntities, { 'name': action.name })
+    return _.cloneDeep(state)
+  },
+  [UPDATE_RELATION_NAME]: (state, action) => {
+    let relation = _.find(state.relations, { 'id': action.relationId })
+    relation.name = action.name
+    return _.cloneDeep(state)
+  },
+  [DELETE_ENTITY_RELATION]: (state, action) => {
+    _.remove(state.relations, { 'id': action.relationId })
     return _.cloneDeep(state)
   }
 }

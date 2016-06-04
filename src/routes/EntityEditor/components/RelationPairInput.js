@@ -11,21 +11,21 @@ const RelationPairInput = (item, key, callbacks, entitySugs) => (
     <TextField
       id='text-field-entity-relation-name'
       defaultValue={item.name}
-      onBlur={callbacks['onChangeRelationName'].bind(null, { name: item.name })}
+      onBlur={callbacks['onChangeRelationName'].bind(null, { id: item.id })}
     />
-    {RelationEntityTags(item.relatedEntities, callbacks['onDeleteEntityTag'])}
+    {RelationEntityTags(item.relatedEntities, callbacks['onDeleteEntityTag'], item.id)}
     <div>
       <AutoComplete
         hintText='type an entity name'
         dataSource={_.map(entitySugs, sug => sug.name) || []}
         onUpdateInput={callbacks['onUpdateSearchEntityInput']}
-        onNewRequest={callbacks['onSelectEntityTag']}
+        onNewRequest={callbacks['onSelectEntityTag'].bind(null, item, entitySugs)}
       />
     </div>
     <div>
       <FlatButton
         icon={<Delete />}
-        onClick={callbacks['onDeleteRelation'].bind(null, item.name)}
+        onClick={callbacks['onDeleteRelation'].bind(null, item.id)}
       />
     </div>
   </div>

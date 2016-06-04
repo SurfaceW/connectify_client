@@ -35,7 +35,8 @@ const initialState = {
   '_id': '',
   name: '',
   define: '',
-  props: []
+  props: [],
+  relations: []
 }
 
 export default function entityReducer (state = _.cloneDeep(initialState), action) {

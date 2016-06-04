@@ -20,7 +20,6 @@ const floatActionButtonStyle = {
 }
 
 export const EntityEditor = ({
-  saveEntity,
   createEntityRequest,
   updateEntityRequest,
   deleteEntityRequest,
@@ -85,12 +84,13 @@ export const EntityEditor = ({
         />
       </div>
     </Paper>
-    <FlatButton
-      label='DELETE ENTITY'
-      primary
-      icon={<Delete />}
-      onClick={deleteEntityRequest.bind(null, entityEditor['_id'])}
-    />
+    {entityEditor['_id']
+      ? <FlatButton
+        label='DELETE ENTITY'
+        primary
+        icon={<Delete />}
+        onClick={deleteEntityRequest.bind(null, entityEditor['_id'])}
+      /> : ''}
     <FloatingActionButton
       style={floatActionButtonStyle}
       mini
@@ -106,7 +106,6 @@ export const EntityEditor = ({
 
 EntityEditor.propTypes = {
   entityEditor: React.PropTypes.object.isRequired,
-  saveEntity: React.PropTypes.func.isRequired,
   updateEntityForm: React.PropTypes.func.isRequired,
   updateEntityProp: React.PropTypes.func.isRequired,
   createNewProp: React.PropTypes.func.isRequired,
