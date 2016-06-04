@@ -14,6 +14,13 @@ export const CREATE_NEW_PROP = 'CREATE_NEW_PROP'
 export const DELETE_ENTITY_PROP = 'DELETE_ENTITY_PROP'
 export const UPDATE_ENTITY_PROP = 'UPDATE_ENTITY_PROP'
 
+export const CREATE_NEW_RELATION = 'CREATE_NEW_RELATION'
+export const UPDATE_RELATION_NAME = 'UPDATE_RELATION_NAME'
+export const DELETE_ENTITY_RELATION_TAG = 'DELETE_ENTITY_RELATION_TAG'
+export const UPDATE_SEARCH_ENTITY_INPUT = 'UPDATE_SEARCH_ENTITY_INPUT'
+export const SELECT_ENTITY_RELATION_TAG = 'SELECT_ENTITY_RELATION_TAG'
+export const DELETE_ENTITY_RELATION = 'DELETE_ENTITY_RELATION'
+
 // ------------------------------------
 // Actions
 // ------------------------------------
@@ -88,6 +95,56 @@ export function deleteProp (id) {
   }
 }
 
+export function createNewRelation () {
+  return {
+    type: CREATE_NEW_RELATION
+  }
+}
+
+export function changeRelationName (name) {
+  return {
+    type: UPDATE_RELATION_NAME,
+    name: name
+  }
+}
+
+export function deleteEntityTag (name) {
+  return {
+    type: DELETE_ENTITY_RELATION_TAG,
+    name: name
+  }
+}
+
+const REQUEST_DELAY = 800
+let requestDelayTimer = null
+export function updateSearchEntityInput (searchText) {
+  return (dispatch) => {
+    clearTimeout(requestDelayTimer)
+    requestDelayTimer = setTimeout(() => {
+      API.searchEntity(searchText).then((response) => {
+        return response.json()
+      }).then((data) => {
+        dispatch({
+          type: UPDATE_SEARCH_ENTITY_INPUT,
+          data: data.data
+        })
+      })
+    }, REQUEST_DELAY)
+  }
+}
+
+export function selectEntityTag (chosenRequest, index) {
+  return {
+    type: SELECT_ENTITY_RELATION_TAG
+  }
+}
+
+export function deleteEntityRelation (name) {
+  return {
+    type: DELETE_ENTITY_RELATION
+  }
+}
+
 export const actions = {
   saveEntity,
   updateEntityForm,
@@ -121,7 +178,21 @@ const ACTION_HANDLERS = {
     state.props = _.remove(state.props, (i) => i.id !== action.id)
     return _.cloneDeep(state)
   },
-  [CREATE_ENTITY]: (state, action) => _.cloneDeep(initialState)
+  [CREATE_ENTITY]: (state, action) => _.cloneDeep(initialState),
+
+  // relation related reducers
+  [CREATE_NEW_RELATION]: (state, action) => {
+    state.relations.push({
+      id: _.uniqueId('entityTag_'),
+      name: 'new relation',
+      relatedEntities: []
+    })
+    return _.cloneDeep(state)
+  },
+  [UPDATE_SEARCH_ENTITY_INPUT]: (state, action) => {
+    state.entitySugs = action.data.map(entity => _.pick(entity, ['_id', 'name']))
+    return _.cloneDeep(state)
+  }
 }
 
 const generateNewProp = (prefix = 'prop_') => {
@@ -138,7 +209,9 @@ const initialState = {
   '_id': '',
   name: '',
   define: '',
-  props: []
+  props: [],
+  relations: [],
+  entitySugs: []
 }
 
 export default function entityEditorReducer (state = _.cloneDeep(initialState), action) {
