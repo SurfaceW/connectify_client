@@ -23,7 +23,7 @@ export function switchToEntityEditPage (entity) {
 const ACTION_HANDLERS = {
   [GOTO_ENTITY]: (state, { results, entityId }) => {
     let result = _.find(results, { '_id': entityId })
-    state = _.pick(result, ['_id', 'name', 'define', 'props'])
+    state = _.pick(result, ['_id', 'name', 'define', 'props', 'relations', 'actions'])
     return _.cloneDeep(state)
   }
 }

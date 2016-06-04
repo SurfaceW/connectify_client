@@ -2,14 +2,16 @@ import React from 'react'
 import AppBar from 'components/AppBar'
 import DefineCard from './DefineCard'
 import PropsCard from './PropsCard'
+import RelationsCard from './RelationsCard'
 import FloatingActionButton from 'material-ui/FloatingActionButton'
 import ActionSettings from 'material-ui/svg-icons/action/settings'
 
-const EntityPage = ({ entity, switchToEntityEditPage }) => (
+const EntityPage = ({ entity, switchToEntityEditPage, gotoEntity }) => (
   <div>
     {AppBar(entity.name)}
     {DefineCard(entity.name, entity.define)}
     {PropsCard(entity.props)}
+    {RelationsCard(entity.relations, gotoEntity)}
     <FloatingActionButton style={{
       'position': 'fixed',
       'bottom': '1rem',
