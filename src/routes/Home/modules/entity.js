@@ -17,7 +17,13 @@ export function switchToEntityAddPage () {
   }
 }
 
-export function searchEntity (query) {
+/**
+ * search entity
+ * @param  {String} query
+ * @param  {Boolean} jump  whether to jump to search result page
+ * @return {Function}
+ */
+export function searchEntity (query, jump = true) {
   return (dispatch) => {
     API.searchEntity(query).then((response) => {
       return response.json()
@@ -26,7 +32,7 @@ export function searchEntity (query) {
         type: SEARCH_ENTITY,
         searchResults: preprocessResponse(response.data)
       })
-      window.connectify_browserHistory.push('search/' + encodeURIComponent(query))
+      jump && window.connectify_browserHistory.push('search/' + encodeURIComponent(query))
     })
   }
 }
