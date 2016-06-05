@@ -53,7 +53,7 @@ export const EntityEditor = ({
         labelPosition='before'
         primary
         icon={<Editor />}
-        onClick={openEditor}
+        onClick={openEditor.bind(null, entityEditor['detail'])}
       />
 
       <TextField

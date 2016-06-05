@@ -35,7 +35,7 @@ export function switchToEntityEditPage (entity) {
 // ------------------------------------
 // Action Handlers
 // ------------------------------------
-const DEFAULT_PROPS = ['_id', 'name', 'define', 'props', 'relations', 'actions']
+const DEFAULT_PROPS = ['_id', 'name', 'define', 'detail', 'props', 'relations', 'actions']
 const ACTION_HANDLERS = {
   [GOTO_ENTITY]: (state, { results, entityId }) => {
     let result = _.find(results, { '_id': entityId })

@@ -3,7 +3,8 @@ import _ from 'lodash'
 // Constants
 // ------------------------------------
 export const SAVE_EDITOR_TEXT = 'SAVE_EDITOR_TEXT'
-import { OPEN_EDITOR } from '../../EntityPage/modules/entity'
+export const GET_ORIGIN_TEXT = 'GET_ORIGIN_TEXT'
+export const OPEN_EDITOR = 'OPEN_EDITOR'
 
 // ------------------------------------
 // Actions
@@ -13,6 +14,13 @@ export function saveEditorText (text) {
   return {
     type: SAVE_EDITOR_TEXT,
     text: text
+  }
+}
+
+export function getOriginText (text) {
+  return {
+    type: GET_ORIGIN_TEXT,
+    text: window.localStorage.getItem('editorText') || ''
   }
 }
 
@@ -28,7 +36,7 @@ const ACTION_HANDLERS = {
     state.text = action.text
     return _.clone(state)
   },
-  [OPEN_EDITOR]: (state, action) => {
+  [GET_ORIGIN_TEXT]: (state, action) => {
     state.text = action.text
     return _.clone(state)
   }

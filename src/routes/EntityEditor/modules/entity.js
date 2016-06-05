@@ -149,6 +149,7 @@ export function deleteEntityRelation (id) {
 
 export function openEditor (text) {
   window.connectify_browserHistory.push('/editor')
+  window.localStorage.setItem('editorText', text)
   return {
     type: OPEN_EDITOR,
     text: text

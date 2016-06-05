@@ -11,10 +11,22 @@ class DraftEditor extends React.Component {
     this.onChange = (editorState) => this.setState({editorState})
   }
 
+  componentWillMount () {
+    this.props.getOriginText()
+  }
+
+  componentWillReceiveProps ({ text }) {
+    this.updateEditor(text)
+  }
+
   componentDidMount () {
-    if (this.props.text) {
+    this.updateEditor(this.props.text)
+  }
+
+  updateEditor (text) {
+    if (text) {
       this.setState({ editorState:
-        EditorState.push(this.state.editorState, ContentState.createFromText(this.props.text), 'adjust-depth') })
+        EditorState.push(this.state.editorState, ContentState.createFromText(text), 'adjust-depth') })
     } else {
       this.setState({ editorState:
       EditorState.push(this.state.editorState, ContentState.createFromText('hello, editor!'), 'adjust-depth') })
@@ -50,7 +62,8 @@ class DraftEditor extends React.Component {
 
 DraftEditor.propTypes = {
   text: React.PropTypes.string.isRequired,
-  saveEditorText: React.PropTypes.func.isRequired
+  saveEditorText: React.PropTypes.func.isRequired,
+  getOriginText: React.PropTypes.func.isRequired
 }
 
 export default DraftEditor
