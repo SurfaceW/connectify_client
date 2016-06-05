@@ -4,9 +4,13 @@ import _ from 'lodash'
 
 const RelationEntityGroup = (relatedEntities, gotoEntity) => (
   <List>
-    {_.map(relatedEntities, entity => {
+    {_.map(relatedEntities, (entity, key) => {
       return (
-        <ListItem primaryText={entity.name} onClick={gotoEntity.bind(null, entity['_id'])} />
+        <ListItem
+          key={key}
+          primaryText={entity.name}
+          onClick={gotoEntity.bind(null, entity['_id'])}
+        />
       )
     })}
   </List>

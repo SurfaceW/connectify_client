@@ -29,10 +29,11 @@ export const OPEN_EDITOR = 'OPEN_EDITOR'
 // ------------------------------------
 export function createEntityRequest (data) {
   return (dispatch, getState) => {
-    return API.createEntity(data).then(() => {
+    return API.createEntity(data).then((res) => {
       dispatch({
         type: CREATE_ENTITY
       })
+      return res.json()
     }).then((res) => {
       window.connectify_browserHistory.replace('/entity/' + _.get(res, 'data.0.id'))
     })
