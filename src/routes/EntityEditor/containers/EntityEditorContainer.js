@@ -21,6 +21,8 @@ import {
   deleteProp,
   updateEntityProp,
 
+  openEditor,
+
   createNewRelation,
   changeRelationName,
   deleteEntityTag,
@@ -37,6 +39,8 @@ const mapActionCreators = {
   updateEntityForm,
   createNewProp,
   deleteProp,
+
+  openEditor,
 
   createNewRelation,
   changeRelationName,

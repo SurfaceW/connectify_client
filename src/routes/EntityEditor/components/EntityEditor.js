@@ -8,6 +8,7 @@ import DeviceWidgets from 'material-ui/svg-icons/device/widgets'
 import FloatingActionButton from 'material-ui/FloatingActionButton'
 import Add from 'material-ui/svg-icons/content/add'
 import Done from 'material-ui/svg-icons/action/done'
+import Editor from 'material-ui/svg-icons/image/edit'
 import Delete from 'material-ui/svg-icons/action/delete'
 import { PropPairList } from './PropPairList'
 import { RelationPairList } from './RelationPairList'
@@ -29,6 +30,8 @@ export const EntityEditor = ({
   createNewProp,
   deleteProp,
 
+  openEditor,
+
   changeRelationName,
   deleteEntityTag,
   updateSearchEntityInput,
@@ -45,6 +48,14 @@ export const EntityEditor = ({
         defaultValue={entityEditor['name'] || ''}
         onBlur={updateEntityForm.bind(null, { type: 'name' })}
       />
+      <FlatButton
+        label='Open the Editor'
+        labelPosition='before'
+        primary
+        icon={<Editor />}
+        onClick={openEditor}
+      />
+
       <TextField
         hintText='Support multiLine edit'
         floatingLabelText='Definition of this entity'
@@ -113,6 +124,8 @@ EntityEditor.propTypes = {
   createEntityRequest: React.PropTypes.func.isRequired,
   updateEntityRequest: React.PropTypes.func.isRequired,
   deleteEntityRequest: React.PropTypes.func.isRequired,
+
+  openEditor: React.PropTypes.func.isRequired,
 
   createNewRelation: React.PropTypes.func.isRequired,
   changeRelationName: React.PropTypes.func.isRequired,

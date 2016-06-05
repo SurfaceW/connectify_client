@@ -5,6 +5,7 @@ import { API } from '../../../store/api'
 // Constants
 // ------------------------------------
 import { SWITCH_TO_ENTITY_EDIT_PAGE } from '../../EntityPage/modules/entity'
+import { SAVE_EDITOR_TEXT } from '../../MarkdownEditor/modules/editor'
 export const SAVE_ENTITY = 'SAVE_ENTITY'
 export const CREATE_ENTITY = 'CREATE_ENTITY'
 export const UPDATE_ENTITY = 'UPDATE_ENTITY'
@@ -20,6 +21,8 @@ export const DELETE_ENTITY_RELATION_TAG = 'DELETE_ENTITY_RELATION_TAG'
 export const UPDATE_SEARCH_ENTITY_INPUT = 'UPDATE_SEARCH_ENTITY_INPUT'
 export const SELECT_ENTITY_RELATION_TAG = 'SELECT_ENTITY_RELATION_TAG'
 export const DELETE_ENTITY_RELATION = 'DELETE_ENTITY_RELATION'
+
+export const OPEN_EDITOR = 'OPEN_EDITOR'
 
 // ------------------------------------
 // Actions
@@ -144,6 +147,14 @@ export function deleteEntityRelation (id) {
   }
 }
 
+export function openEditor (text) {
+  window.connectify_browserHistory.push('/editor')
+  return {
+    type: OPEN_EDITOR,
+    text: text
+  }
+}
+
 export const actions = {
   updateEntityForm,
   updateEntityProp,
@@ -178,7 +189,13 @@ const ACTION_HANDLERS = {
   },
   [CREATE_ENTITY]: (state, action) => _.cloneDeep(initialState),
 
-  // relation related reducers
+  // detail text reducer
+  [SAVE_EDITOR_TEXT]: (state, action) => {
+    state.detail = action.text
+    return _.clone(state)
+  },
+
+  // relations related reducers
   [CREATE_NEW_RELATION]: (state, action) => {
     state.relations.push({
       id: _.uniqueId('entityTag_'),
@@ -226,6 +243,7 @@ const initialState = {
   '_id': '',
   name: '',
   define: '',
+  detail: '',
   props: [],
   relations: [],
   entitySugs: []
