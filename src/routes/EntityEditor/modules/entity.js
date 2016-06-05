@@ -33,7 +33,8 @@ export function createEntityRequest (data) {
       dispatch({
         type: CREATE_ENTITY
       })
-      window.connectify_browserHistory.replace('/')
+    }).then((res) => {
+      window.connectify_browserHistory.replace('/entity/' + _.get(res, 'data.0.id'))
     })
   }
 }
@@ -44,7 +45,7 @@ export function updateEntityRequest (data) {
       dispatch({
         type: UPDATE_ENTITY
       })
-      window.connectify_browserHistory.replace('/')
+      window.connectify_browserHistory.replace('/entity/' + data['_id'])
     })
   }
 }
