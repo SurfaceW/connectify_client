@@ -1,0 +1,21 @@
+.searchResultCard {
+  margin-top: 10px;
+  cursor: pointer;
+}
+
+
+@media (min-width: 960px) {
+  .searchResultCardContent {
+    width: 98%;
+  }
+
+  .searchResultCard {
+    margin-top: 10px;
+    float: left;
+    width: 50%;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+  }
+}
