@@ -202,7 +202,7 @@ const ACTION_HANDLERS = {
   [CREATE_NEW_RELATION]: (state, action) => {
     state.relations.push({
       id: _.uniqueId('entityTag_'),
-      name: 'new relation',
+      name: '',
       relatedEntities: []
     })
     return _.cloneDeep(state)
@@ -233,7 +233,7 @@ const ACTION_HANDLERS = {
 }
 
 const generateNewProp = (prefix = 'prop_') => {
-  const newProp = { 'name': 'prop name', 'value': 'prop value' }
+  const newProp = { 'name': '', 'value': '' }
   let newprops = _.cloneDeep(newProp)
   newprops.id = _.uniqueId(prefix)
   return newprops

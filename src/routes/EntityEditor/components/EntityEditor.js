@@ -13,11 +13,17 @@ import Delete from 'material-ui/svg-icons/action/delete'
 import { PropPairList } from './PropPairList'
 import { RelationPairList } from './RelationPairList'
 import AppBar from '../../../components/AppBar'
+import classes from './EntityEditor.scss'
 
 const floatActionButtonStyle = {
   'position': 'fixed',
   'bottom': '1rem',
   'right': '1rem'
+}
+
+const inputStyle = {
+  'width': '90%',
+  'marginLeft': '5%'
 }
 
 export const EntityEditor = ({
@@ -42,34 +48,42 @@ export const EntityEditor = ({
   entityEditor }) => (
   <div>
     {AppBar(entityEditor['_id'] ? 'Update Entity' : 'Create Entity')}
-    <Paper zDepth={1}>
-      <TextField
-        hintText='Entity Name'
-        defaultValue={entityEditor['name'] || ''}
-        onBlur={updateEntityForm.bind(null, { type: 'name' })}
-      />
-      <FlatButton
-        label='Open the Editor'
-        labelPosition='before'
-        primary
-        icon={<Editor />}
-        onClick={openEditor.bind(null, entityEditor['detail'])}
-      />
-
-      <TextField
-        hintText='Support multiLine edit'
-        floatingLabelText='Definition of this entity'
-        defaultValue={entityEditor['define'] || ''}
-        multiLine
-        rows={5}
-        onBlur={updateEntityForm.bind(null, { type: 'define' })}
-      />
+    <Paper zDepth={1} style={{ marginTop: '10px' }}>
+      <div>
+        <TextField
+          style={inputStyle}
+          hintText='Please enter the entity name'
+          floatingLabelText='Entity Name'
+          defaultValue={entityEditor['name'] || ''}
+          onBlur={updateEntityForm.bind(null, { type: 'name' })}
+        />
+      </div>
+      <div>
+        <TextField
+          style={inputStyle}
+          hintText='Support multiLine edit'
+          floatingLabelText='Definition of this entity'
+          defaultValue={entityEditor['define'] || ''}
+          multiLine
+          rows={5}
+          onBlur={updateEntityForm.bind(null, { type: 'define' })}
+        />
+      </div>
+      <div className={classes['editDetail']}>
+        <FlatButton
+          label='Edit detail information'
+          labelPosition='before'
+          primary
+          icon={<Editor />}
+          onClick={openEditor.bind(null, entityEditor['detail'])}
+        />
+      </div>
     </Paper>
     <Paper zDepth={1} style={{ marginTop: '10px' }}>
       <Subheader><DeviceWidgets color={'#4BB9D1'} /> Properties Define</Subheader>
       <Divider />
       {PropPairList(entityEditor.props, updateEntityProp, deleteProp)}
-      <div>
+      <div style={{ 'padding': '20px 0' }}>
         <FlatButton
           label='add new prop'
           icon={<Add />}
@@ -87,7 +101,7 @@ export const EntityEditor = ({
         onSelectEntityTag: selectEntityTag,
         onDeleteRelation: deleteEntityRelation
       }, entityEditor.entitySugs)}
-      <div>
+      <div style={{ 'padding': '20px 0' }}>
         <FlatButton
           label='add new relation'
           icon={<Add />}

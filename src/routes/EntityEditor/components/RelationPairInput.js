@@ -5,28 +5,38 @@ import TextField from 'material-ui/TextField'
 import RelationEntityTags from './RelationEntityTags'
 import Delete from 'material-ui/svg-icons/action/delete'
 import _ from 'lodash'
+import classes from './EntityEditor.scss'
 
 const RelationPairInput = (item, key, callbacks, entitySugs) => (
   <div key={key}>
-    <TextField
-      id='text-field-entity-relation-name'
-      defaultValue={item.name}
-      onBlur={callbacks['onChangeRelationName'].bind(null, { id: item.id })}
-    />
-    {RelationEntityTags(item.relatedEntities, callbacks['onDeleteEntityTag'], item.id)}
-    <div>
-      <AutoComplete
-        hintText='type an entity name'
-        dataSource={_.map(entitySugs, sug => sug.name) || []}
-        onUpdateInput={callbacks['onUpdateSearchEntityInput']}
-        onNewRequest={callbacks['onSelectEntityTag'].bind(null, item, entitySugs)}
+    <div className={classes['relationsPairContainer']}>
+      <TextField
+        className={classes['inputGap']}
+        id='text-field-entity-relation-name'
+        floatingLabelText='Entity Relation Name'
+        defaultValue={item.name}
+        onBlur={callbacks['onChangeRelationName'].bind(null, { id: item.id })}
       />
+      <div>
+        <AutoComplete
+          className={classes['inputGap']}
+          hintText='type an entity name'
+          floatingLabelText='Reference Entity Name'
+          dataSource={_.map(entitySugs, sug => sug.name) || []}
+          onUpdateInput={callbacks['onUpdateSearchEntityInput']}
+          onNewRequest={callbacks['onSelectEntityTag'].bind(null, item, entitySugs)}
+        />
+      </div>
+      <div>
+        <FlatButton
+          style={{ top: '30px' }}
+          icon={<Delete />}
+          onClick={callbacks['onDeleteRelation'].bind(null, item.id)}
+        />
+      </div>
     </div>
-    <div>
-      <FlatButton
-        icon={<Delete />}
-        onClick={callbacks['onDeleteRelation'].bind(null, item.id)}
-      />
+    <div className={classes['relationsPairContainerTag']} style={{ 'overflow': 'hidden' }}>
+      {RelationEntityTags(item.relatedEntities, callbacks['onDeleteEntityTag'], item.id)}
     </div>
   </div>
 )

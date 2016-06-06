@@ -18,10 +18,18 @@ export function getEntity (id) {
     }).then((response) => {
       dispatch({
         type: GET_ENTITY,
-        entity: response.data
+        entity: preprocessData(response.data)
       })
     })
   }
+}
+
+const preprocessData = (data) => {
+  data.relations = _.map(data.relations, (r) => {
+    r.id = _.uniqueId('relationId_')
+    return r
+  })
+  return data
 }
 
 export function switchToEntityEditPage (entity) {
