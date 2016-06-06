@@ -6,7 +6,6 @@ import { API } from '../../../store/api'
 // ------------------------------------
 import { SWITCH_TO_ENTITY_EDIT_PAGE } from '../../EntityPage/modules/entity'
 import { SAVE_EDITOR_TEXT } from '../../MarkdownEditor/modules/editor'
-export const SAVE_ENTITY = 'SAVE_ENTITY'
 export const CREATE_ENTITY = 'CREATE_ENTITY'
 export const UPDATE_ENTITY = 'UPDATE_ENTITY'
 export const DELETE_ENTITY = 'DELETE_ENTITY'
@@ -169,7 +168,6 @@ export const actions = {
 // Action Handlers
 // ------------------------------------
 const ACTION_HANDLERS = {
-  [SAVE_ENTITY]: (state, action) => state,
   [SWITCH_TO_ENTITY_EDIT_PAGE]: (state, action) => {
     return _.cloneDeep(action.entity)
   },
@@ -177,8 +175,11 @@ const ACTION_HANDLERS = {
     _.set(state, action.prop, action.data, '')
     return _.cloneDeep(state)
   },
+
+  // deal with entity props
   [UPDATE_ENTITY_PROP]: (state, action) => {
     let prop = _.find(state.props, { 'id': action.id })
+    if (!prop) prop = _.find(state.props, { '_id': action.id })
     prop[action.propType] = action.value
     return _.cloneDeep(state)
   },
@@ -187,9 +188,15 @@ const ACTION_HANDLERS = {
     return _.cloneDeep(state)
   },
   [DELETE_ENTITY_PROP]: (state, action) => {
-    state.props = _.remove(state.props, (i) => i.id !== action.id)
+    state.props = _.remove(state.props, (i) => {
+      let id = i.id
+      if (!i.id) id = i['_id']
+      return id !== action.id
+    })
     return _.cloneDeep(state)
   },
+
+  // deal with create new entity
   [CREATE_ENTITY]: (state, action) => _.cloneDeep(initialState),
 
   // detail text reducer
@@ -208,26 +215,30 @@ const ACTION_HANDLERS = {
     return _.cloneDeep(state)
   },
   [UPDATE_SEARCH_ENTITY_INPUT]: (state, action) => {
-    state.entitySugs = action.data.map(entity => _.pick(entity, ['_id', 'name']))
+    state.entitySugs = action.data.map(entity => _.pick(entity, ['_id', 'name', 'id']))
     return _.cloneDeep(state)
   },
   [SELECT_ENTITY_RELATION_TAG]: (state, action) => {
     let relation = _.find(state.relations, { 'id': action.relation.id })
+    if (!relation) relation = _.find(state.relations, { '_id': action.relation['_id'] })
     relation.relatedEntities.push(_.find(action.entitySugs, { 'name': action.name }))
     return _.cloneDeep(state)
   },
   [DELETE_ENTITY_RELATION_TAG]: (state, action) => {
     let relation = _.find(state.relations, { 'id': action.relationId })
+    if (!relation) relation = _.find(state.relations, { '_id': action.relationId })
     _.remove(relation.relatedEntities, { 'name': action.name })
     return _.cloneDeep(state)
   },
   [UPDATE_RELATION_NAME]: (state, action) => {
     let relation = _.find(state.relations, { 'id': action.relationId })
+    if (!relation) relation = _.find(state.relations, { '_id': action.relationId })
     relation.name = action.name
     return _.cloneDeep(state)
   },
   [DELETE_ENTITY_RELATION]: (state, action) => {
     _.remove(state.relations, { 'id': action.relationId })
+    _.remove(state.relations, { '_id': action.relationId })
     return _.cloneDeep(state)
   }
 }

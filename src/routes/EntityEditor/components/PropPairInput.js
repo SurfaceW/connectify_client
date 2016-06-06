@@ -11,20 +11,23 @@ export const PropPairInput = (item, onBlur, key, onDelete) => (
       floatingLabelText='Entity Prop Name'
       defaultValue={item.name}
       className={classes['inputGap']}
-      onBlur={onBlur.bind(null, { id: item.id, propType: 'name', value: item.value })}
+      onBlur={onBlur.bind(null, { id: item.id || item['_id'], propType: 'name', value: item.value })}
     />
     <TextField
       id='text-field-entity-prop-value'
       floatingLabelText='Entity Prop Value'
       defaultValue={item.value}
       className={classes['inputGap']}
-      onBlur={onBlur.bind(null, { id: item.id, propType: 'value', value: item.value })}
+      onBlur={onBlur.bind(null, { id: item.id || item['_id'], propType: 'value', value: item.value })}
     />
-    <div>
+    <div style={{
+      'display': 'flex',
+      'justifyContent': 'center',
+      'alignItems': 'center'
+    }}>
       <FlatButton
-        style={{ top: '30px' }}
         icon={<Delete />}
-        onClick={onDelete.bind(null, item.id)}
+        onClick={onDelete.bind(null, item.id || item['_id'])}
       />
     </div>
   </div>

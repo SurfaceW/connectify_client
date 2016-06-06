@@ -15,7 +15,7 @@ const RelationPairInput = (item, key, callbacks, entitySugs) => (
         id='text-field-entity-relation-name'
         floatingLabelText='Entity Relation Name'
         defaultValue={item.name}
-        onBlur={callbacks['onChangeRelationName'].bind(null, { id: item.id })}
+        onBlur={callbacks['onChangeRelationName'].bind(null, { id: item.id || item['_id'] })}
       />
       <div>
         <AutoComplete
@@ -27,16 +27,19 @@ const RelationPairInput = (item, key, callbacks, entitySugs) => (
           onNewRequest={callbacks['onSelectEntityTag'].bind(null, item, entitySugs)}
         />
       </div>
-      <div>
+      <div style={{
+        'display': 'flex',
+        'justifyContent': 'center',
+        'alignItems': 'center'
+      }}>
         <FlatButton
-          style={{ top: '30px' }}
           icon={<Delete />}
-          onClick={callbacks['onDeleteRelation'].bind(null, item.id)}
+          onClick={callbacks['onDeleteRelation'].bind(null, item.id || item['_id'])}
         />
       </div>
     </div>
     <div className={classes['relationsPairContainerTag']} style={{ 'overflow': 'hidden' }}>
-      {RelationEntityTags(item.relatedEntities, callbacks['onDeleteEntityTag'], item.id)}
+      {RelationEntityTags(item.relatedEntities, callbacks['onDeleteEntityTag'], item.id || item['_id'])}
     </div>
   </div>
 )
