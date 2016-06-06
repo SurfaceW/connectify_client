@@ -1,0 +1,18 @@
+.generalCard {
+  margin-top: 10px;
+  width: 99%;
+  margin-left: 0.5%
+}
+
+@media (min-width: 960px) {
+  .narrowCard {
+    float: left;
+    width: 50%;
+    display: flex;
+    justify-content: center;
+  }
+
+  .narrowCardContent {
+    width: 98%;
+  }
+}

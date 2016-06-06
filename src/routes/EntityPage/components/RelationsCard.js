@@ -2,21 +2,32 @@ import React from 'react'
 import _ from 'lodash'
 import { Card, CardHeader, CardText } from 'material-ui/Card'
 import RelationEntityGroup from './RelationEntityGroup'
+import classes from './EntityPage.scss'
 
 const RelationsCard = (relations, gotoEntity) => (
-  <Card>
-    <CardHeader title='Relations' />
-    <CardText>
-      {_.map(relations, (relation) => {
-        return (
-          <div key={_.uniqueId('prop_')}>
-            <h4>{relation.name}</h4>
-            {RelationEntityGroup(relation.relatedEntities, gotoEntity)}
-          </div>
-        )
-      })}
-    </CardText>
-  </Card>
+  <div className={classes['narrowCard']}>
+    <Card
+      className={classes['generalCard'] + ' ' + classes['narrowCardContent']}
+      initiallyExpanded
+    >
+      <CardHeader
+        title='Relations'
+        subtitle='General relations between entities to this entity'
+        actAsExpander
+        showExpandableButton
+      />
+      <CardText expandable>
+        {_.map(relations, (relation) => {
+          return (
+            <div key={_.uniqueId('prop_')}>
+              <h4>{relation.name}</h4>
+              {RelationEntityGroup(relation.relatedEntities, gotoEntity)}
+            </div>
+          )
+        })}
+      </CardText>
+    </Card>
+  </div>
 )
 
 RelationsCard.PropTypes = {
